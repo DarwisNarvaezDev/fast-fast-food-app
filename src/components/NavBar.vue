@@ -45,15 +45,20 @@ export default {
     methods: {
         renderNavComponents() {
             const renderMode = this.renderOption
-            if ( renderMode === 1) {
-                this.home = false
-                this.food = false
-            } else if ( renderMode === 2 ) {
-                this.home = true
-                this.food = false
-            } else if ( renderMode === 3 ) {
-                this.home = true
-                this.food = true
+
+            switch (renderMode){
+                case 1:
+                    this.home = false
+                    this.food = false
+                    break;
+                case 2:
+                    this.home = true
+                    this.food = false
+                    break;
+                case 3:
+                    this.home = true
+                    this.food = true
+                    break;
             }
         }
     },
