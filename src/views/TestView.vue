@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="mainDiv">
         <TestHeadingVue headingContent="Hello world" />
     </div>
 </template>
@@ -13,3 +13,11 @@ export default {
     },
 }
 </script>
+
+<style lang="scss">
+@import '../styles/variables.scss';
+
+.mainDiv {
+    background-color: $main-ssfa-color;
+}
+</style>
