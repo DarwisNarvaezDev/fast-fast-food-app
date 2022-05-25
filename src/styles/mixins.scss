@@ -1,0 +1,30 @@
+@import './variables.scss';
+
+@mixin prepareCentralPanel {
+    width: 100%;
+    height: 900px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: $app-background-image;
+    background-size: cover;
+}
+
+@mixin prepareApp($backgroundColor) {
+    display: flex;
+    width: 70%;
+    height: 80%;
+    border-radius: $main-border-radius;
+    background-color: $backgroundColor;
+    cursor: pointer;
+}
+
+@mixin shopImageDiv {
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}

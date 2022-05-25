@@ -1,19 +1,22 @@
 <template>
-  <NavBar :renderOption="3" />
+  <!-- <UserView /> -->
+  <ShopView />
 </template>
 
 <script>
-import NavBar from './components/NavBar.vue'
+import UserView from './views/UserView.vue'
+import ShopView from './views/ShopView.vue'
 
 export default {
   components: {
-    NavBar
+    UserView,
+    ShopView
   },
 }
 </script>
 
 
-<style lang="scss">
-  @import './styles/reset.css';
-  @import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
+<style lang="scss" scoped>
+@import './styles/reset.css';
+@import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
 </style>
