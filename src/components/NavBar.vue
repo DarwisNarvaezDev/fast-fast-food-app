@@ -66,6 +66,9 @@ export default {
     mounted() {
         this.renderNavComponents(this.renderOption)
     },
+    updated(){
+        this.renderNavComponents(this.renderOption)
+    }
 }
 </script>
 

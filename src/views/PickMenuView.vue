@@ -1,24 +1,24 @@
 <template>
     <div class="shopViewWrapper">
         <section class="shopViewContainer">
-            <FoodMenu />
+            <div class="pickMenu">
+                
+            </div>>
         </section>
     </div>
 </template>
 
 <script>
-import NavBar from '../components/NavBar.vue'
-import FoodMenu from '../components/FoodMenu.vue'
 
 export default {
     components: {
-        FoodMenu
     },
     data() {
-        return {
-        }
     },
     methods: {
+    },
+    mounted(){
+        this.$store.dispatch('updateNavRenderOptions', 2);
     }
 }
 </script>
@@ -36,5 +36,9 @@ export default {
 
 .shopViewContainer {
     @include prepareCentralPanel;
+}
+
+.pickMenu {
+    @include prepareApp(salmon)
 }
 </style>
