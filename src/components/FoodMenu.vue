@@ -1,9 +1,9 @@
 <template>
-    <div class="shopPanel">
-        <div @click="handleImageClick()" class="burgerDiv">
+    <div class="animate__animated animate__fadeIn shopPanel">
+        <div @click="handleImageClick($event)" class="burgerDiv">
             <img src="../assets/burger1.jpeg" alt="Burger">
         </div>
-        <div @click="handleImageClick()" class="saladDiv">
+        <div @click="handleImageClick($event)" class="saladDiv">
             <img src="../assets/salad1.jpeg" alt="Salad">
         </div>
     </div>
@@ -13,10 +13,16 @@
 
 export default {
     methods: {
-        handleImageClick(){
-            console.log("hola");
-            this.$store.dispatch('updateNavRenderOptions', 2);
-            this.$router.push('/menu')
+        handleImageClick(e){
+            const alt = e.target.alt;
+            const burgerAlt = "Burger";
+            if( burgerAlt === alt ){
+                this.$store.dispatch('getToMenuViewWithType', 1);
+                this.$router.push('/menu/1')
+            }else {
+                this.$store.dispatch('getToMenuViewWithType', 2);
+                this.$router.push('/menu/2')
+            }
         }
     }
 }

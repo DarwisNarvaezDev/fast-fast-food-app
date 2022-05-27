@@ -2,23 +2,36 @@
     <div class="shopViewWrapper">
         <section class="shopViewContainer">
             <div class="pickMenu">
-                
+                <MenuSection v-for="menu in menuData.menus" :menuInfo="menu" :menuExtras="menuData.extras" />
             </div>>
         </section>
     </div>
 </template>
 
 <script>
+import MenuSection from '@/components/MenuSection.vue';
 
 export default {
     components: {
+        MenuSection
     },
     data() {
+        return {
+            menuData: this.$store.state.renderingMenuOption,
+        }
     },
     methods: {
+        callForMenuOptions (){
+            if( !this.$store.state.renderingMenuOption.menus ){
+                const { menuType } = this.$route.params
+                this.$store.dispatch('getToMenuViewWithType', parseInt(menuType));
+                this.menuData = this.$store.state.renderingMenuOption;
+                this.viewData = true;
+            }
+        }
     },
-    mounted(){
-        this.$store.dispatch('updateNavRenderOptions', 2);
+    beforeMount(){
+        this.callForMenuOptions();
     }
 }
 </script>
@@ -26,12 +39,14 @@ export default {
 <style lang="scss" scoped>
 @import '../styles/variables.scss';
 @import '../styles/mixins.scss';
+@import url('https://fonts.googleapis.com/css2?family=Thasadith:wght@700&display=swap');
 
 .shopViewWrapper {
     width: 100%;
     display: flex;
     justify-content: center;
     align-content: center;
+    font-family: 'Thasadith', sans-serif;
 }
 
 .shopViewContainer {
@@ -39,6 +54,6 @@ export default {
 }
 
 .pickMenu {
-    @include prepareApp(salmon)
+    @include prepareApp($user-box-color);
 }
 </style>

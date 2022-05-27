@@ -15,9 +15,9 @@
 @mixin prepareApp($backgroundColor) {
     display: flex;
     flex-direction: row;
-    width: 70%;
+    justify-content: center;
+    max-width: 70%;
     height: 80%;
-    // margin-right: 7rem;
     border-radius: $main-border-radius;
     background-color: $backgroundColor;
     cursor: pointer;

@@ -9,7 +9,7 @@ const routes = [
     component: ShopView
   },
   {
-    path: '/menu',
+    path: '/menu/:menuType',
     name: 'pick-menu',
     component: PickMenuView
   },

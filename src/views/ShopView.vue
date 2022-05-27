@@ -1,7 +1,7 @@
 <template>
     <div class="shopViewWrapper">
         <section class="shopViewContainer">
-            <FoodMenu />
+            <FoodMenu  />
         </section>
     </div>
 </template>
