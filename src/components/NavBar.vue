@@ -3,26 +3,26 @@
         <ul>
             <li v-if="home">
                 <router-link to="/">
-                    <fa icon="house" color="#b0b0b0" size="3x" />
+                    <fa icon="house" :color="color" size="3x" />
                 </router-link>
                 <span>.</span>
             </li>
             <li v-if="food">
                 <router-link to="/">
-                    <fa icon="burger" color="#b0b0b0" size="3x" />
+                    <fa icon="burger" :color="color" size="3x" />
                 </router-link>
                 <span>.</span>
             </li>
             <li v-if="food">
                 <router-link to="/">
-                    <fa icon="leaf" color="#b0b0b0" size="3x" />
+                    <fa icon="leaf" :color="color" size="3x" />
                 </router-link>
                 <span>.</span>
             </li>
         </ul>
         <div class="userNavContainer">
             <router-link to="/">
-                <fa icon="user" color="#b0b0b0" size="3x" />
+                <fa icon="user" :color="color" size="3x" />
             </router-link>
             <span>.</span>
         </div>
@@ -39,7 +39,8 @@ export default {
     data() {
         return {
             home: true,
-            food: true
+            food: true,
+            color: "#b0b0b0",
         }
     },
     methods: {
@@ -65,6 +66,9 @@ export default {
     mounted() {
         this.renderNavComponents(this.renderOption)
     },
+    updated(){
+        this.renderNavComponents(this.renderOption)
+    }
 }
 </script>
 
@@ -73,9 +77,8 @@ export default {
 @import '../styles/variables.scss';
 
 .mainNav {
-    position: sticky;
     background-color: $main-ssfa-color;
-    width: 5%;
+    width: $main-nav-width;
     height: 900px;
 }
 
@@ -90,6 +93,7 @@ export default {
 
 .mainNav li {
     margin-top: 1rem;
+    margin-right: 1rem;
     margin-bottom: 1rem;
     margin-left: 1rem;
 
@@ -104,6 +108,7 @@ export default {
 }
 
 .mainNav li span {
+    margin-left: 10px;
     font-size: xx-large;
 }
 
@@ -114,6 +119,7 @@ export default {
     align-content: center;
     color: $main-ssfa-color;
     height: 5%;
+    margin-right: 15px;
 
     &:hover {
         color: white;
