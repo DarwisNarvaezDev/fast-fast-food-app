@@ -32,6 +32,15 @@ export default {
     },
     beforeMount(){
         this.callForMenuOptions();
+    },
+    beforeRouteLeave(to, from, next) {
+        const answer = window.confirm('All your order items will be lost, proceed?')
+        if( answer ){
+            next();
+        }else{
+            console.log("We stay!");
+        }
+        
     }
 }
 </script>

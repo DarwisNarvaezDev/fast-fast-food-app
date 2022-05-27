@@ -3,26 +3,36 @@
         <ul>
             <li v-if="home">
                 <router-link to="/">
-                    <fa icon="house" :color="color" size="3x" />
+                    <div class="iconWrapper">
+                        <fa icon="house" :color="color" size="3x" />
+                    </div>
                 </router-link>
                 <span>.</span>
             </li>
             <li v-if="food">
-                <router-link to="/">
-                    <fa icon="burger" :color="color" size="3x" />
+                <router-link to="/menu/1">
+                    <div class="iconWrapper burgerWrapper" @click="handleRouterPush(1)">
+                        <Pellet v-if="burgerItems > 0" :itemsOnCart="burgerItems" :key="burgerItems" />
+                        <fa icon="burger" :color="color" size="3x" />
+                    </div>
                 </router-link>
                 <span>.</span>
             </li>
             <li v-if="food">
-                <router-link to="/">
-                    <fa icon="leaf" :color="color" size="3x" />
+                <router-link to="/menu/2">
+                    <div class="iconWrapper saladWrapper" @click="handleRouterPush(2)">
+                        <Pellet v-if="saladItems > 0" :itemsOnCart="saladItems" :key="burgerItems" />
+                        <fa icon="leaf" :color="color" size="3x" />
+                    </div>
                 </router-link>
                 <span>.</span>
             </li>
         </ul>
         <div class="userNavContainer">
             <router-link to="/">
-                <fa icon="user" :color="color" size="3x" />
+                <div class="iconWrapper">
+                    <fa icon="user" :color="color" size="3x" />
+                </div>
             </router-link>
             <span>.</span>
         </div>
@@ -31,23 +41,35 @@
 </template>
 
 <script>
+import Pellet from './Pellet.vue'
+import { callSessionObject } from '../helpers/callSessionObject.js'
 
 export default {
+    components: {
+        Pellet
+    },
     props: {
-        renderOption: Number
+        renderOption: Number,
+        sessionTransactionObject: String,
     },
     data() {
         return {
             home: true,
             food: true,
             color: "#b0b0b0",
+            burgerItems: 0,
+            saladItems: 0,
+            drinkItems: [],
         }
     },
     methods: {
+        handleRouterPush(destination) {
+            window.location.replace(`${window.location.origin}/menu/${destination}`);
+        },
         renderNavComponents() {
             const renderMode = this.renderOption
 
-            switch (renderMode){
+            switch (renderMode) {
                 case 1:
                     this.home = false
                     this.food = false
@@ -61,13 +83,39 @@ export default {
                     this.food = true
                     break;
             }
+        },
+        distributePellets() {
+            const sessionObject = callSessionObject();
+            const obj = JSON.parse(sessionObject);
+            if (obj.burgers || obj.salads || obj.drinks) {
+                const jsonObj = JSON.parse(sessionObject)
+                const { burgers, salads, drinks } = jsonObj;
+                this.burgerItems = this.populateQuantities(burgers);
+                this.saladItems = this.populateQuantities(salads);
+            }
+        },
+        populateQuantities(array) {
+            let qty = 0;
+            array.forEach(order => {
+                if (!order.qty) {
+                    throw new Error("Not a valid array");
+                } else {
+                    qty += order.qty
+                }
+            })
+            return qty;
         }
     },
     mounted() {
         this.renderNavComponents(this.renderOption)
+        this.distributePellets()
     },
-    updated(){
+    updated() {
         this.renderNavComponents(this.renderOption)
+        this.distributePellets()
+    },
+    created() {
+        this.distributePellets()
     }
 }
 </script>
@@ -75,6 +123,15 @@ export default {
 
 <style lang="scss">
 @import '../styles/variables.scss';
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100&display=swap');
+
+.burgerWrapper {
+    cursor: pointer;
+}
+
+.iconWrapper {
+    position: relative;
+}
 
 .mainNav {
     background-color: $main-ssfa-color;

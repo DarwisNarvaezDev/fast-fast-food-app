@@ -33,3 +33,9 @@
     justify-content: center;
     align-content: center;
 }
+
+@mixin hoverListItem($li-bg-color, $li-font-color){
+    border-radius: 15px;
+    background-color: $li-bg-color;
+    color: $li-font-color;
+}

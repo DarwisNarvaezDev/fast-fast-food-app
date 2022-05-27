@@ -11,8 +11,9 @@ const routes = [
   {
     path: '/menu/:menuType',
     name: 'pick-menu',
-    component: PickMenuView
-  },
+    component: PickMenuView,
+    meta: {reuse: false}
+  }
 ]
 
 const router = createRouter({

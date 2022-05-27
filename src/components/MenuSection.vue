@@ -24,33 +24,21 @@
 </template>
 
 <script>
-import {
-    EXTRA_BACON,
-    EXTRA_CHEESE,
-    EXTRA_PICKLES,
-    EXTRA_CROUTONS,
-    EXTRA_RANCH,
-    EXTRA_OLIVES,
-
-} from '../helpers/Constants';
 
 export default {
     props: {
         menuInfo: Object,
         menuExtras: Array,
+        menuType: String,
     },
     data() {
         return {
-            extraPickles: false,
-            extraBacon: false,
-            extraCheese: false,
-            extraOlives: false,
-            extraRanch: false,
-            extraCroutons: false,
+            key: this.$route.params,
+            extras: [],
             qty: 0,
             menuName: this.menuInfo.menuName,
             extrasList: this.menuExtras,
-            menuOption: this.$route.params.menuType
+            menuOption: this.$route.params.menuType,
         }
     },
     methods: {
@@ -58,26 +46,14 @@ export default {
             return require(`../assets/${this.menuInfo.img}`)
         },
         handleSubmit() {
-            if (parseInt(this.menuOption) === 2) {
-                const orderForm_s = {
-                    menuName: this.menuInfo.menuName,
-                    extraOlives: this.extraOlives,
-                    extraRanch: this.extraRanch,
-                    extraCroutons: this.extraCroutons,
-                    qty: this.qty
-                }
-                this.$store.dispatch('pushLineToOrderArray', orderForm_s);
-            } else {
-                const orderForm_b = {
-                    menuName: this.menuInfo.menuName,
-                    extraPickles: this.extraPickles,
-                    extraBacon: this.extraBacon,
-                    extraCheese: this.extraCheese,
-                    qty: this.qty
-                }
-                this.$store.dispatch('pushLineToOrderArray', orderForm_b);
+            let menuType = parseInt(this.$route.params.menuType);
+            const orderForm = {
+                menuType: menuType,
+                menuName: this.menuInfo.menuName,
+                menuExtras: this.extras,
+                qty: this.qty
             }
-
+            this.$store.dispatch('pushLineToOrderArray', orderForm);
         },
         handleIncrement() {
             this.qty++
@@ -92,57 +68,13 @@ export default {
         },
         handleExtras(e) {
             let extraItemName = e.target.textContent;
-
-            if (EXTRA_PICKLES === extraItemName) {
-                if (this.extraPickles) {
-                    this.extraPickles = !this.extraPickles;
-                    e.target.className = '';
-                } else {
-                    this.extraPickles = !this.extraPickles;
-                    e.target.className = 'eventClickLiTop';
-                }
-            } else if (EXTRA_BACON === extraItemName) {
-                if (this.extraBacon) {
-                    this.extraBacon = !this.extraBacon;
-                    e.target.className = '';
-                } else {
-                    this.extraBacon = !this.extraBacon;
-                    e.target.className = 'eventClickLiMiddle';
-                }
-            } else if (EXTRA_CHEESE === extraItemName) {
-                if (this.extraCheese) {
-                    this.extraCheese = !this.extraCheese;
-                    e.target.className = '';
-                } else {
-                    this.extraCheese = !this.extraCheese;
-                    e.target.className = 'eventClickLiBottom';
-                }
-            }
-
-            if (EXTRA_OLIVES === extraItemName) {
-                if (this.extraOlives) {
-                    this.extraOlives = !this.extraOlives;
-                    e.target.className = '';
-                } else {
-                    this.extraOlives = !this.extraOlives;
-                    e.target.className = 'eventClickLiTop';
-                }
-            } else if (EXTRA_CROUTONS === extraItemName) {
-                if (this.extraCroutons) {
-                    this.extraCroutons = !this.extraCroutons;
-                    e.target.className = '';
-                } else {
-                    this.extraCroutons = !this.extraCroutons;
-                    e.target.className = 'eventClickLiMiddle';
-                }
-            } else if (EXTRA_RANCH === extraItemName) {
-                if (this.extraRanch) {
-                    this.extraRanch = !this.extraRanch;
-                    e.target.className = '';
-                } else {
-                    this.extraRanch = !this.extraRanch;
-                    e.target.className = 'eventClickLiBottom';
-                }
+            if (this.extras.includes(extraItemName)) {
+                let extraIndex = this.extras.indexOf(extraItemName);
+                this.extras.splice(extraIndex)
+                e.target.className = ''
+            } else {
+                this.extras.push(extraItemName);
+                e.target.className = 'eventClick'
             }
         }
     }
@@ -158,21 +90,8 @@ export default {
     color: black;
 }
 
-.eventClickLiTop {
-    border-radius: 15px 15px 0 0;
-    background-color: green;
-    color: white;
-}
-
-.eventClickLiMiddle {
-    background-color: green;
-    color: white;
-}
-
-.eventClickLiBottom {
-    border-radius: 0 0 15px 15px;
-    background-color: green;
-    color: white;
+.eventClick {
+    @include hoverListItem($li-bg-color-selected, $li-font-color-selected);
 }
 
 .menuSection {
@@ -185,8 +104,9 @@ export default {
 }
 
 .menuEllipse {
+    margin-top: 1.5rem;
     width: 80%;
-    height: 40%;
+    height: 35%;
     border-radius: 50%;
     overflow: hidden;
     display: flex;
@@ -200,6 +120,7 @@ export default {
 }
 
 .menuList {
+    margin-top: 1rem;
     width: 80%;
     height: 23%;
     background-color: rgba($color: #f6f0f0, $alpha: 0.8);
@@ -216,32 +137,16 @@ export default {
         justify-content: space-around;
 
         li {
-            height: 33.20%;
+            height: 32%;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            overflow: hidden;
+            margin: 0.5rem;
 
-            &:nth-child(1):hover {
-                border-radius: $main-border-radius $main-border-radius 0 0;
-                background-color: $menu-listItem-hover-background-color;
-                color: $menu-listItem-hover-font-color;
-            }
-
-            &:nth-child(2):hover {
-                background-color: $menu-listItem-hover-background-color;
-                color: $menu-listItem-hover-font-color;
-            }
-
-            &:nth-child(3):hover {
-                border-radius: 0 0 $main-border-radius $main-border-radius;
-                background-color: $menu-listItem-hover-background-color;
-                color: $menu-listItem-hover-font-color;
-            }
-
-            &:nth-child(1),
-            &:nth-child(2) {
-                border-bottom: 0.5px solid black;
+            &:hover {
+                @include hoverListItem($li-bg-color-selected, $li-font-color-selected);
             }
         }
 

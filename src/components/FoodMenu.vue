@@ -1,15 +1,18 @@
 <template>
     <div class="animate__animated animate__fadeIn shopPanel">
-        <div @click="handleImageClick($event)" class="burgerDiv">
+        <div @click="handleImageClick($event)" class="burgerDiv" v-tooltip="'Burgers'">
             <img src="../assets/burger1.jpeg" alt="Burger">
         </div>
-        <div @click="handleImageClick($event)" class="saladDiv">
+        <div @click="handleImageClick($event)" class="saladDiv" v-tooltip="'Salads'">
             <img src="../assets/salad1.jpeg" alt="Salad">
         </div>
     </div>
 </template>
 
 <script>
+import { MENU_TYPE_BURGER,
+        MENU_TYPE_SALAD,
+        MENU_TYPE_DRINK } from '../helpers/Constants'
 
 export default {
     methods: {
@@ -17,13 +20,16 @@ export default {
             const alt = e.target.alt;
             const burgerAlt = "Burger";
             if( burgerAlt === alt ){
-                this.$store.dispatch('getToMenuViewWithType', 1);
+                this.$store.dispatch('getToMenuViewWithType', MENU_TYPE_BURGER);
                 this.$router.push('/menu/1')
             }else {
-                this.$store.dispatch('getToMenuViewWithType', 2);
+                this.$store.dispatch('getToMenuViewWithType', MENU_TYPE_SALAD);
                 this.$router.push('/menu/2')
             }
         }
+    },
+    beforeMount(){
+        this.$store.state.navRenderOption = 2
     }
 }
 </script>
