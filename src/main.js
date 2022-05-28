@@ -9,8 +9,11 @@ import 'animate.css';
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons"
+import { createSessionObject, checkSessionObject } from './helpers/SessionService'
 
 library.add(fas)
+const checkSession = checkSessionObject()
+if( !checkSession ) createSessionObject()
 
 createApp(App)
     .component("fa", FontAwesomeIcon)

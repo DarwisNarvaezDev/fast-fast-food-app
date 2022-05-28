@@ -11,7 +11,7 @@
             </li>
             <li v-if="food">
                 <router-link to="/menu/1">
-                    <div class="iconWrapper burgerWrapper" @click="handleRouterPush(1)">
+                    <div class="iconWrapper foodWrapper" @click="handleRouterPush(1)">
                         <Pellet v-if="burgerItems > 0" :itemsOnCart="burgerItems" :key="burgerItems" />
                         <fa icon="burger" :color="color" size="3x" />
                     </div>
@@ -20,9 +20,18 @@
             </li>
             <li v-if="food">
                 <router-link to="/menu/2">
-                    <div class="iconWrapper saladWrapper" @click="handleRouterPush(2)">
-                        <Pellet v-if="saladItems > 0" :itemsOnCart="saladItems" :key="burgerItems" />
+                    <div class="iconWrapper foodWrapper" @click="handleRouterPush(2)">
+                        <Pellet v-if="saladItems > 0" :itemsOnCart="saladItems" :key="saladItems" />
                         <fa icon="leaf" :color="color" size="3x" />
+                    </div>
+                </router-link>
+                <span>.</span>
+            </li>
+            <li v-if="drinks">
+                <router-link to="/menu/3">
+                    <div class="iconWrapper foodWrapper" @click="handleRouterPush(3)">
+                        <Pellet v-if="drinkItem > 0" :itemsOnCart="drinkItems" :key="drinkItems" />
+                        <fa icon="beer" :color="color" size="3x" />
                     </div>
                 </router-link>
                 <span>.</span>
@@ -42,7 +51,7 @@
 
 <script>
 import Pellet from './Pellet.vue'
-import { callSessionObject } from '../helpers/callSessionObject.js'
+import { callSessionObject, createSessionObject } from '../helpers/SessionService';
 
 export default {
     components: {
@@ -56,10 +65,11 @@ export default {
         return {
             home: true,
             food: true,
+            drinks: false,
             color: "#b0b0b0",
             burgerItems: 0,
             saladItems: 0,
-            drinkItems: [],
+            drinkItems: 0,
         }
     },
     methods: {
@@ -68,7 +78,6 @@ export default {
         },
         renderNavComponents() {
             const renderMode = this.renderOption
-
             switch (renderMode) {
                 case 1:
                     this.home = false
@@ -125,7 +134,7 @@ export default {
 @import '../styles/variables.scss';
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100&display=swap');
 
-.burgerWrapper {
+.foodWrapper {
     cursor: pointer;
 }
 
