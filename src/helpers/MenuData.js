@@ -14,5 +14,13 @@ export const menuType = {
             { menuName: "Caprese Salad", img: 'caprese.webp'},
             { menuName: "Pasta Salad", img: 'pastasalad.jpeg'},
         ]
+    },
+    drink: {
+        extras: ['Medium', 'X-Large', 'XX-Large'],
+        menus: [
+            { menuName: "Soda", img: 'soda.webp'},
+            { menuName: "Orange Juice", img: 'juice.jpeg'},
+            { menuName: "Water", img: 'water.jpeg'},
+        ]
     }
 }

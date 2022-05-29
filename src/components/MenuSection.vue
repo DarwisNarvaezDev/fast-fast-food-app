@@ -1,7 +1,7 @@
 <template>
     <form class="animate__animated animate__bounceIn menuSection" @submit.prevent="handleSubmit">
         <div class="menuEllipse" v-tooltip="menuName">
-            <img :src="getStaticAssets()" alt="menuBurger">
+            <img :src="getStaticAssets()" alt="menu">
         </div>
         <div class="menuList" v-tooltip.left="'Extras'">
             <ul>
@@ -84,7 +84,6 @@ export default {
 <style lang="scss" scoped>
 @import '../styles/variables.scss';
 @import '../styles/mixins.scss';
-@import url('https://fonts.googleapis.com/css2?family=Thasadith:wght@700&display=swap');
 
 .a {
     color: black;
