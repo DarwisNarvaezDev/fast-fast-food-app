@@ -11,7 +11,7 @@
             </li>
             <li v-if="food">
                 <router-link to="/menu/1">
-                    <div class="iconWrapper foodWrapper" @click="handleRouterPush(1)">
+                    <div class="iconWrapper foodWrapper" @click="handleRouterPush(1)" v-if="food">
                         <Pellet v-if="burgerItems > 0" :itemsOnCart="burgerItems" :key="burgerItems" />
                         <fa icon="burger" :color="color" size="3x" />
                     </div>
@@ -20,7 +20,7 @@
             </li>
             <li v-if="food">
                 <router-link to="/menu/2">
-                    <div class="iconWrapper foodWrapper" @click="handleRouterPush(2)">
+                    <div class="iconWrapper foodWrapper" @click="handleRouterPush(2)" v-if="food">
                         <Pellet v-if="saladItems > 0" :itemsOnCart="saladItems" :key="saladItems" />
                         <fa icon="leaf" :color="color" size="3x" />
                     </div>
@@ -29,9 +29,17 @@
             </li>
             <li v-if="drinks">
                 <router-link to="/menu/3">
-                    <div class="iconWrapper foodWrapper" @click="handleRouterPush(3)">
-                        <Pellet v-if="drinkItem > 0" :itemsOnCart="drinkItems" :key="drinkItems" />
+                    <div class="iconWrapper foodWrapper" @click="handleRouterPush(3)" v-if="drinks">
+                        <Pellet v-if="drinkItems > 0" :itemsOnCart="drinkItems" :key="drinkItems" />
                         <fa icon="beer" :color="color" size="3x" />
+                    </div>
+                </router-link>
+                <span>.</span>
+            </li>
+            <li v-if="proceedCheckout">
+                <router-link to="/checkout">
+                    <div class="iconWrapper foodWrapper animate__animated animate__tada">
+                        <fa icon="cart-arrow-down" color="#5277bf" size="3x" />
                     </div>
                 </router-link>
                 <span>.</span>
@@ -66,6 +74,7 @@ export default {
             home: true,
             food: true,
             drinks: false,
+            proceedCheckout: false,
             color: "#b0b0b0",
             burgerItems: 0,
             saladItems: 0,
@@ -79,17 +88,34 @@ export default {
         renderNavComponents() {
             const renderMode = this.renderOption
             switch (renderMode) {
+                case 0:
+                    this.home = false
+                    this.food = false
+                    this.drinks = false
+                    this.proceedCheckout = false
+                    break;
+                    break;
                 case 1:
                     this.home = false
                     this.food = false
+                    this.drinks = true
+                    this.proceedCheckout = false
                     break;
                 case 2:
                     this.home = true
                     this.food = false
+                    this.drinks = true
+                    this.proceedCheckout = false
                     break;
                 case 3:
                     this.home = true
                     this.food = true
+                    break;
+                case 4:
+                    this.home = true
+                    this.food = true
+                    this.drinks = true
+                    this.proceedCheckout = true
                     break;
             }
         },
@@ -101,6 +127,7 @@ export default {
                 const { burgers, salads, drinks } = jsonObj;
                 this.burgerItems = this.populateQuantities(burgers);
                 this.saladItems = this.populateQuantities(salads);
+                this.drinkItems = this.populateQuantities(drinks);
             }
         },
         populateQuantities(array) {

@@ -2,11 +2,13 @@ import {SESSION_TRANSACTIONAL_OBJECT, SESSION_TRANSACTIONAL_SKELETON} from '../h
 
 export const checkSessionObject = () => {
   const sessionObject = sessionStorage.getItem("sessionTransactionalObject");
-  const { burgers, salads, drinks } = JSON.parse(sessionObject);
-  if( burgers.length > 0 || salads.length > 0 || drinks.length > 0  ){
-    return true;
-  } else {
-    return false;
+  if( sessionObject ){
+    const { burgers, salads, drinks } = JSON.parse(sessionObject);
+    if( burgers.length > 0 || salads.length > 0 || drinks.length > 0  ){
+      return true;
+    } else {
+      return false;
+    }
   }
 };
 export const callSessionObject = () => {

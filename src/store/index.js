@@ -9,26 +9,33 @@ import {
 
 export default createStore({
   state: {
-    navRenderOption: 1,
+    navRenderOption: 0,
     renderingMenuOption: {},
     sessionTransactionObject: "",
     render: false,
   },
   getters: {},
   mutations: {
-    UPDATE_RENDER(state, payload){
-      state.render = !state.render
+    UPDATE_RENDER(state, payload) {
+      state.render = !state.render;
     },
     GET_TO_MENU_VIEW_WITH_TYPE(state, payload) {
-      // If the payload is 1, we render burger options, if else we render salad options.
-      let burgerRender = payload === 1; // should return a boolean
-      if (burgerRender) {
-        state.renderingMenuOption = menuType.burger;
-        state.navRenderOption = 3;
-      } else {
-        state.renderingMenuOption = menuType.salad;
-        state.navRenderOption = 3;
+      console.log(`El render option que me llega: ${payload}`);
+      switch (payload) {
+        case 1:
+          state.renderingMenuOption = menuType.burger;
+          state.navRenderOption = 3;
+          break;
+        case 2:
+          state.renderingMenuOption = menuType.salad;
+          state.navRenderOption = 3;
+          break;
+        case 3:
+          state.renderingMenuOption = menuType.drink;
+          state.navRenderOption = 4;
+          break;
       }
+
     },
     UPDATE_NAV_RENDER_OPTION(state, payload) {
       state.navRenderOption = payload;
@@ -55,6 +62,14 @@ export default createStore({
             qty: qty,
           };
           sessionTransaction.salads.push(saladsObj);
+          break;
+        case 3: //Drinks
+          const drinksObj = {
+            menuName: menuName,
+            menuExtras: menuExtras,
+            qty: qty,
+          };
+          sessionTransaction.drinks.push(drinksObj);
           break;
       }
       sessionStorage.setItem(

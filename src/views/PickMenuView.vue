@@ -3,12 +3,8 @@
         <section class="shopViewContainer">
             <div class="pickMenu">
                 <OrderPellet :orderInfo="$store.state.sessionTransactionObject" />
-                <MenuSection 
-                v-for="menu in menuData.menus" 
-                :menuInfo="menu" 
-                :menuExtras="menuData.extras"
-                :key="menu"
-                />
+                <MenuSection v-for="menu in menuData.menus" :menuInfo="menu" :menuExtras="menuData.extras"
+                    :key="menu" />
             </div>>
         </section>
     </div>
