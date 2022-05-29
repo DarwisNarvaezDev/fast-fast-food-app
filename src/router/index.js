@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import ShopView from '../views/ShopView.vue'
 import PickMenuView from '../views/PickMenuView.vue'
+import { callSessionObject } from '../helpers/SessionService'
 
 const routes = [
   {
@@ -11,8 +12,9 @@ const routes = [
   {
     path: '/menu/:menuType',
     name: 'pick-menu',
-    component: PickMenuView
-  },
+    component: PickMenuView,
+    meta: {reuse: false}
+  }
 ]
 
 const router = createRouter({

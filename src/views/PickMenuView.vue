@@ -2,7 +2,13 @@
     <div class="shopViewWrapper">
         <section class="shopViewContainer">
             <div class="pickMenu">
-                <MenuSection v-for="menu in menuData.menus" :menuInfo="menu" :menuExtras="menuData.extras" />
+                <OrderPellet :orderInfo="$store.state.sessionTransactionObject" />
+                <MenuSection 
+                v-for="menu in menuData.menus" 
+                :menuInfo="menu" 
+                :menuExtras="menuData.extras"
+                :key="menu"
+                />
             </div>>
         </section>
     </div>
@@ -10,10 +16,12 @@
 
 <script>
 import MenuSection from '@/components/MenuSection.vue';
+import OrderPellet from '@/components/OrderPellet.vue';
 
 export default {
     components: {
-        MenuSection
+        MenuSection,
+        OrderPellet
     },
     data() {
         return {
@@ -21,8 +29,8 @@ export default {
         }
     },
     methods: {
-        callForMenuOptions (){
-            if( !this.$store.state.renderingMenuOption.menus ){
+        callForMenuOptions() {
+            if (!this.$store.state.renderingMenuOption.menus) {
                 const { menuType } = this.$route.params
                 this.$store.dispatch('getToMenuViewWithType', parseInt(menuType));
                 this.menuData = this.$store.state.renderingMenuOption;
@@ -30,8 +38,16 @@ export default {
             }
         }
     },
-    beforeMount(){
+    beforeMount() {
         this.callForMenuOptions();
+    },
+    beforeRouteLeave(to, from, next) {
+        const answer = window.confirm('All your order items will be lost, proceed?')
+        if (answer) {
+            next();
+        } else {
+            console.log("We stay!");
+        }
     }
 }
 </script>

@@ -7,18 +7,19 @@
 </template>
 
 <script>
-import NavBar from '../components/NavBar.vue'
-import FoodMenu from '../components/FoodMenu.vue'
+import FoodMenu from '../components/FoodMenu.vue';
+import {createSessionObject} from '../helpers/SessionService';
+
 
 export default {
     components: {
         FoodMenu
     },
-    data() {
-        return {
+    mounted(){
+        const sessionTransactionalObject = JSON.parse(sessionStorage.getItem('transaction'));
+        if ( !sessionTransactionalObject ){
+            createSessionObject();
         }
-    },
-    methods: {
     }
 }
 </script>

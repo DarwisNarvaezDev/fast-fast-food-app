@@ -1,8 +1,11 @@
 <template>
   <div class="mainApp">
-    <NavBar :renderOption="$store.state.navRenderOption" />
+    <NavBar 
+    :renderOption="$store.state.navRenderOption"
+    :sessionTransactionObject="$store.state.sessionTransactionObject"
+    />
     <router-view name="home"></router-view>
-    <router-view name="pick-menu"></router-view>
+    <router-view :key="$route.path" name="pick-menu"></router-view>
   </div>
 </template>
 
