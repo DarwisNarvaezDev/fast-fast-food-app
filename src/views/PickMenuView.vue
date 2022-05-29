@@ -7,7 +7,6 @@
                 v-for="menu in menuData.menus" 
                 :menuInfo="menu" 
                 :menuExtras="menuData.extras"
-                :renderPellet="renderPellet"
                 :key="menu"
                 />
             </div>>
@@ -49,10 +48,6 @@ export default {
         } else {
             console.log("We stay!");
         }
-    },
-    renderPellet(){
-        console.log("entre");
-        // this.renderOrderPellet = true;
     }
 }
 </script>

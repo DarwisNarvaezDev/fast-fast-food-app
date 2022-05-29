@@ -1,5 +1,5 @@
 <template>
-    <i class="confirm animate__animated animate__tada" v-if="render">
+    <i class="confirm animate__animated animate__tada" v-if="render" v-tooltip.top="'Proceed to checkout!'">
         <fa icon="cart-arrow-down" color="#ffffff" size="2x" />
     </i>
 </template>
