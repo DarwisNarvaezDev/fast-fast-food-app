@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import ShopView from '../views/ShopView.vue'
 import PickMenuView from '../views/PickMenuView.vue'
-import { callSessionObject } from '../helpers/SessionService'
+import CheckoutView from '../views/CheckoutView.vue'
 
 const routes = [
   {
@@ -14,6 +14,11 @@ const routes = [
     name: 'pick-menu',
     component: PickMenuView,
     meta: {reuse: false}
+  },
+  {
+    path: '/checkout',
+    name: 'asdasdasd',
+    component: CheckoutView,
   }
 ]
 

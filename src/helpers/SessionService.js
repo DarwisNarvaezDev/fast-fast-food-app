@@ -15,7 +15,6 @@ export const callSessionObject = () => {
   const sessionObject = sessionStorage.getItem("sessionTransactionalObject");
   const string = JSON.stringify(sessionObject);
   const json = JSON.parse(string);
-
   return json;
 };
 export const createSessionObject = () => {
@@ -23,4 +22,29 @@ export const createSessionObject = () => {
     SESSION_TRANSACTIONAL_OBJECT,
     JSON.stringify(SESSION_TRANSACTIONAL_SKELETON)
   );
+};
+export const sessionObjectToArray = () => {
+  const sessionObject = sessionStorage.getItem("sessionTransactionalObject");
+  const json = JSON.parse(sessionObject);
+  const { burgers, salads, drinks } = json;
+  let arrayOfOrders = [];
+  arrayOfOrders.push(burgers);
+  arrayOfOrders.push(salads);
+  arrayOfOrders.push(drinks);
+  return arraysAsListsWithId(arrayOfOrders);
+};
+const arraysAsListsWithId = (arrayOfLists) => {
+  let arrayOfElements = [];
+  let extraString = '';
+  arrayOfLists.forEach( element => {
+    element.forEach( listPosition => {
+      listPosition.menuExtras.forEach( extra => {
+        extraString = extraString.concat(extra, ", ");
+      });
+      let extraStringWoSpaceInTheEnd = extraString.slice(0, extraString.lastIndexOf(" ") - 1);
+      listPosition.menuExtras = extraStringWoSpaceInTheEnd;
+      arrayOfElements.push(listPosition);
+    })
+  });
+  return arrayOfElements;
 };

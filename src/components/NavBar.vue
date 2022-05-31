@@ -159,7 +159,6 @@ export default {
 
 <style lang="scss">
 @import '../styles/variables.scss';
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100&display=swap');
 
 .foodWrapper {
     cursor: pointer;

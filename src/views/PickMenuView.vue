@@ -1,6 +1,7 @@
 <template>
     <div class="shopViewWrapper">
         <section class="shopViewContainer">
+            <TimeTag />
             <div class="pickMenu">
                 <OrderPellet :orderInfo="$store.state.sessionTransactionObject" />
                 <MenuSection v-for="menu in menuData.menus" :menuInfo="menu" :menuExtras="menuData.extras"
@@ -13,12 +14,14 @@
 <script>
 import MenuSection from '@/components/MenuSection.vue';
 import OrderPellet from '@/components/OrderPellet.vue';
+import TimeTag from '@/components/TimeTag.vue';
 
 export default {
     components: {
-        MenuSection,
-        OrderPellet
-    },
+    MenuSection,
+    OrderPellet,
+    TimeTag
+},
     data() {
         return {
             menuData: this.$store.state.renderingMenuOption,
