@@ -1,4 +1,5 @@
 <template>
+    <TimeTag />
     <div class="animate__animated animate__fadeIn shopPanel">
         <div @click="handleImageClick($event)" class="burgerDiv" v-tooltip="'Burgers'">
             <img src="../assets/burger1.jpeg" alt="Burger">
@@ -11,10 +12,14 @@
 
 <script>
 import { MENU_TYPE_BURGER,
-        MENU_TYPE_SALAD,
-        MENU_TYPE_DRINK } from '../helpers/Constants'
+        MENU_TYPE_SALAD } from '../helpers/Constants'
+import TimeTag from './TimeTag.vue';
 
 export default {
+    components: {
+    TimeTag,
+    TimeTag
+},
     methods: {
         handleImageClick(e){
             const alt = e.target.alt;

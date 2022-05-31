@@ -1,9 +1,6 @@
 import { createStore } from "vuex";
 import { menuType } from "@/helpers/MenuData";
 import {
-  MENU_TYPE_BURGER,
-  MENU_TYPE_SALAD,
-  MENU_TYPE_DRINK,
   SESSION_TRANSACTIONAL_OBJECT,
 } from "../helpers/Constants";
 
