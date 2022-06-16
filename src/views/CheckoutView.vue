@@ -47,8 +47,8 @@
                             <div class="message">Order Created!</div>
                         </div>
                         <div class="ticketInfo">
-                            <p>{Ticket serial}</p>
-                            <p>{Ticket owner}</p>
+                            <p>{{ticketSerial}}</p>
+                            <p>{{ticketOwner}}</p>
                         </div>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
 <script>
 import TimeTag from '@/components/TimeTag.vue';
 import ModifyOrderButton from '@/components/ModifyOrderButton.vue';
-import { MENU_TYPE_BURGER } from '../helpers/Constants'
+import { MENU_TYPE_BURGER, API_URI, API_INSERT_ORDER_MAPPING } from '../helpers/Constants'
 
 export default {
     components: { TimeTag, ModifyOrderButton },
@@ -68,7 +68,9 @@ export default {
         return {
             showModal: false,
             showLoading: false,
-            showCheckout: true
+            showCheckout: true,
+            ticketSerial: "",
+            ticketOwner: "",
         }
     },
     methods: {
@@ -88,18 +90,31 @@ export default {
         handleInput(e) {
             e.target.value = ''
         },
-        handleSubmit(e) {
-            console.log(e.target[0].value);
+        async handleSubmit(e) {
+            const customerName = e.target[0].value;
             this.showLoading = !this.showLoading;
-            setTimeout(() => {
-                this.showCheckout = !this.showCheckout;
-                this.showLoading = !this.showLoading;
-            }, 5000);
+            const request = await fetch(API_URI + API_INSERT_ORDER_MAPPING, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ customer_name: customerName })
+            });
+            const response = await request.json();
+            if (response) {
+                setTimeout(() => {
+                    this.ticketSerial = `00${response.id}`
+                    this.ticketOwner = `${response.customer_name}`
+                    this.showCheckout = !this.showCheckout;
+                    this.showLoading = !this.showLoading;
+                }, 5000);
+            }
         },
         hideModal() {
             this.showModal = false;
         },
-        handleBackReset(){
+        handleBackReset() {
             this.$router.push('/');
         }
     },
@@ -120,7 +135,6 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    // background-color: pink;
     height: 100%;
     width: 100%;
     border-radius: 0 0 15px 15px;
@@ -177,9 +191,10 @@ export default {
     flex-direction: column;
     text-align: center;
     margin-right: 2rem;
-    font-size: 50px;
+    font-size: 70px;
     font-weight: bold;
     border-left: 1px solid black;
+    font-family: 'Thasadith', sans-serif;
 
     p {
         margin: 1rem;
