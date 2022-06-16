@@ -52,7 +52,11 @@ export default {
                 menuExtras: this.extras,
                 qty: this.qty
             }
-            this.$store.dispatch('pushLineToOrderArray', orderForm);
+            if( this.qty === 0 ){
+                console.log("Cannot add");
+            }else{
+                this.$store.dispatch('pushLineToOrderArray', orderForm);
+            }
         },
         handleIncrement() {
             this.qty++
@@ -112,8 +116,8 @@ export default {
     align-items: center;
 
     img {
-        scale: 1.2;
-        -webkit-transform: scale(0.6);
+        transform: scale();
+        // -webkit-transform: scale(0.6);
     }
 }
 

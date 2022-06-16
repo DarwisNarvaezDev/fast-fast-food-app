@@ -2,9 +2,9 @@ export const menuType = {
     burger: {
         extras: ['Pickles', 'Bacon', 'Cheese'],
         menus: [
-            { menuName: "Cheesburger", img: 'cheeseburger.jpeg'},
-            { menuName: "Double Cheesburger", img: 'double.jpeg'},
-            { menuName: "Veggie Cheesburger", img: 'veggie.jpeg'},
+            { menuName: "Cheeseburger", img: 'cheeseburger.jpeg'},
+            { menuName: "Double Cheeseburger", img: 'double.jpeg'},
+            { menuName: "Veggie Cheeseburger", img: 'veggie.jpeg'},
         ]
     },
     salad: {

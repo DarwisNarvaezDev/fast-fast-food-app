@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import ShopView from '../views/ShopView.vue'
 import PickMenuView from '../views/PickMenuView.vue'
 import CheckoutView from '../views/CheckoutView.vue'
+import {sessionObjectToArray} from '../helpers/SessionService'
 
 const routes = [
   {
@@ -18,7 +19,7 @@ const routes = [
   {
     path: '/checkout',
     name: 'asdasdasd',
-    component: CheckoutView,
+    component: CheckoutView
   }
 ]
 
