@@ -1,9 +1,10 @@
 <template>
     <div class="loader" v-if="showLoading">Creating your order</div>
     <section class="checkoutContainer">
-        <div :class="{checkoutWrapper: true, 'screenOver': showLoading}">
+        <div :class="{ checkoutWrapper: true, 'screenOver': showLoading }">
             <TimeTag />
-            <div class="checkoutPanel" @mouseleave="hideModal">
+            <!-- Vif here -->
+            <div class="checkoutPanel" @mouseleave="hideModal" v-if="showCheckout">
                 <i class="back" v-tooltip="'Return to menu'" @click="handleBack">
                     <fa icon="backward" size="2x" color="#ffffff" />
                 </i>
@@ -15,21 +16,42 @@
                         </li>
                     </ul>
                 </div>
-        <div class="confirm">
-            <form class="nameForm animate__animated animate__fadeIn" v-if="showModal"
-                @submit.prevent="handleSubmit($event)">
-                <div class="nameSection">
-                    <label for="text">Client's Name</label>
-                    <input id="text" type="text" value="Type here" @click="handleInput($event)">
+                <div class="confirm">
+                    <form class="nameForm animate__animated animate__fadeIn" v-if="showModal"
+                        @submit.prevent="handleSubmit($event)">
+                        <div class="nameSection">
+                            <label for="text">Client's Name</label>
+                            <input id="text" type="text" value="Type here" @click="handleInput($event)">
+                        </div>
+                    </form>
+                    <div class="blank" v-else></div>
+                    <div class="iconSection">
+                        <i class="iconForm" @click="handleModal">
+                            <fa icon="thumbs-up" size="2x" color="#ffffff" @click="handleModal" />
+                        </i>
+                    </div>
                 </div>
-            </form>
-            <div class="blank" v-else></div>
-            <div class="iconSection">
-                <i class="iconForm" @click="handleModal">
-                    <fa icon="thumbs-up" size="2x" color="#ffffff" @click="handleModal" />
-                </i>
             </div>
-        </div>
+            <div class="orderCreated" v-else>
+                <i class="back" v-tooltip="'Return to menu'" @click="handleBackReset">
+                    <fa icon="backward" size="2x" color="#ffffff" />
+                </i>
+                <div class="orderCreatedContainer">
+                    <div class="orderCreatedUp">
+                        <div class="createdConfirm animate__animated animate__bounce">
+                            <div class="ellipse">
+                                <i>
+                                    <fa icon="thumbs-up" size="6x" color="#ffffff" />
+                                </i>
+                            </div>
+                            <div class="message">Order Created!</div>
+                        </div>
+                        <div class="ticketInfo">
+                            <p>{Ticket serial}</p>
+                            <p>{Ticket owner}</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -45,7 +67,8 @@ export default {
     data() {
         return {
             showModal: false,
-            showLoading: false
+            showLoading: false,
+            showCheckout: true
         }
     },
     methods: {
@@ -67,10 +90,17 @@ export default {
         },
         handleSubmit(e) {
             console.log(e.target[0].value);
-            this.showLoading = true;
+            this.showLoading = !this.showLoading;
+            setTimeout(() => {
+                this.showCheckout = !this.showCheckout;
+                this.showLoading = !this.showLoading;
+            }, 5000);
         },
         hideModal() {
             this.showModal = false;
+        },
+        handleBackReset(){
+            this.$router.push('/');
         }
     },
     mounted() {
@@ -84,9 +114,84 @@ export default {
 @import '../styles/mixins.scss';
 @import '../styles/variables.scss';
 @import url('https://fonts.googleapis.com/css2?family=Thasadith:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
 
-.screenOver {
-filter: blur(2px);
+.orderCreatedContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    // background-color: pink;
+    height: 100%;
+    width: 100%;
+    border-radius: 0 0 15px 15px;
+
+}
+
+.orderCreatedUp {
+    width: 100%;
+    height: 80%;
+    display: flex;
+    align-items: center;
+}
+
+.createdConfirm {
+    margin-top: 2rem;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.ellipse {
+    width: 40%;
+    height: 35%;
+    border-radius: 50%;
+    background-color: green;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+    flex-direction: column;
+}
+
+.message {
+    margin-top: 1rem;
+    height: 30%;
+    width: 80%;
+    font-family: 'Great Vibes', cursive;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 55px;
+    font-weight: bold;
+}
+
+.ticketInfo {
+    width: 50%;
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    text-align: center;
+    margin-right: 2rem;
+    font-size: 50px;
+    font-weight: bold;
+    border-left: 1px solid black;
+
+    p {
+        margin: 1rem;
+    }
+}
+
+.orderCreatedDown {
+    border-top: 1px solid black;
+    width: 93%;
+    margin-left: 2rem;
+    height: 50%;
+    margin-bottom: 2rem;
 }
 
 .confirm {
@@ -208,6 +313,10 @@ filter: blur(2px);
 }
 
 .checkoutPanel {
+    @include prepareApp(whitesmoke);
+}
+
+.orderCreated {
     @include prepareApp(whitesmoke);
 }
 
