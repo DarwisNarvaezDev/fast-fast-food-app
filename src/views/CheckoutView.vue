@@ -1,11 +1,12 @@
 <template>
+    <div class="loader" v-if="showLoading">Creating your order</div>
     <section class="checkoutContainer">
-        <i class="back" v-tooltip="'Return to menu'" @click="handleBack">
-            <fa icon="backward" size="2x" color="#ffffff" />
-        </i>
-        <div class="checkoutWrapper" @mouseenter="hideModal">
+        <div :class="{checkoutWrapper: true, 'screenOver': showLoading}">
             <TimeTag />
-            <div class="checkoutPanel">
+            <div class="checkoutPanel" @mouseleave="hideModal">
+                <i class="back" v-tooltip="'Return to menu'" @click="handleBack">
+                    <fa icon="backward" size="2x" color="#ffffff" />
+                </i>
                 <div class="orderListWrapper">
                     <ul>
                         <li v-for="(v, k) in $store.state.orderToRender" :key="v">
@@ -14,8 +15,6 @@
                         </li>
                     </ul>
                 </div>
-            </div>
-        </div>
         <div class="confirm">
             <form class="nameForm animate__animated animate__fadeIn" v-if="showModal"
                 @submit.prevent="handleSubmit($event)">
@@ -25,10 +24,12 @@
                 </div>
             </form>
             <div class="blank" v-else></div>
-            <div class="iconSection" >
+            <div class="iconSection">
                 <i class="iconForm" @click="handleModal">
                     <fa icon="thumbs-up" size="2x" color="#ffffff" @click="handleModal" />
                 </i>
+            </div>
+        </div>
             </div>
         </div>
     </section>
@@ -44,6 +45,7 @@ export default {
     data() {
         return {
             showModal: false,
+            showLoading: false
         }
     },
     methods: {
@@ -65,8 +67,9 @@ export default {
         },
         handleSubmit(e) {
             console.log(e.target[0].value);
+            this.showLoading = true;
         },
-        hideModal(){
+        hideModal() {
             this.showModal = false;
         }
     },
@@ -82,13 +85,17 @@ export default {
 @import '../styles/variables.scss';
 @import url('https://fonts.googleapis.com/css2?family=Thasadith:wght@700&display=swap');
 
+.screenOver {
+filter: blur(2px);
+}
+
 .confirm {
 
     width: 400px;
     position: absolute;
     z-index: 1000;
     height: 300px;
-    top: 500px;
+    top: 360px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -163,8 +170,8 @@ export default {
     z-index: 1000;
     width: 80px;
     height: 80px;
-    top: 90px;
-    left: 13%;
+    top: -36px;
+    left: -3%;
     border-radius: 50%;
     text-align: center;
     background-color: $secondary-button-color;
@@ -193,14 +200,106 @@ export default {
 }
 
 .checkoutContainer {
-    @include prepareMainContainer
+    @include prepareMainContainer;
 }
 
 .checkoutWrapper {
-    @include prepareCentralPanel
+    @include prepareCentralPanel;
 }
 
 .checkoutPanel {
-    @include prepareApp(whitesmoke)
+    @include prepareApp(whitesmoke);
+}
+
+.loader {
+    color: black;
+    font-size: larger;
+    margin: 100px auto;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    position: absolute;
+    text-indent: -9999em;
+    -webkit-animation: load4 1.3s infinite linear;
+    animation: load4 1.3s infinite linear;
+    -webkit-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    transform: translateZ(0);
+    z-index: 10000000;
+    top: 380px;
+    left: 52.1%;
+    transform: scale(2);
+}
+
+@-webkit-keyframes load4 {
+
+    0%,
+    100% {
+        box-shadow: 0 -3em 0 0.2em, 2em -2em 0 0em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 0;
+    }
+
+    12.5% {
+        box-shadow: 0 -3em 0 0, 2em -2em 0 0.2em, 3em 0 0 0, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 -1em;
+    }
+
+    25% {
+        box-shadow: 0 -3em 0 -0.5em, 2em -2em 0 0, 3em 0 0 0.2em, 2em 2em 0 0, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 -1em;
+    }
+
+    37.5% {
+        box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0em 0 0, 2em 2em 0 0.2em, 0 3em 0 0em, -2em 2em 0 -1em, -3em 0em 0 -1em, -2em -2em 0 -1em;
+    }
+
+    50% {
+        box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 0em, 0 3em 0 0.2em, -2em 2em 0 0, -3em 0em 0 -1em, -2em -2em 0 -1em;
+    }
+
+    62.5% {
+        box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 0, -2em 2em 0 0.2em, -3em 0 0 0, -2em -2em 0 -1em;
+    }
+
+    75% {
+        box-shadow: 0em -3em 0 -1em, 2em -2em 0 -1em, 3em 0em 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 0, -3em 0em 0 0.2em, -2em -2em 0 0;
+    }
+
+    87.5% {
+        box-shadow: 0em -3em 0 0, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 0, -3em 0em 0 0, -2em -2em 0 0.2em;
+    }
+}
+
+@keyframes load4 {
+
+    0%,
+    100% {
+        box-shadow: 0 -3em 0 0.2em, 2em -2em 0 0em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 0;
+    }
+
+    12.5% {
+        box-shadow: 0 -3em 0 0, 2em -2em 0 0.2em, 3em 0 0 0, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 -1em;
+    }
+
+    25% {
+        box-shadow: 0 -3em 0 -0.5em, 2em -2em 0 0, 3em 0 0 0.2em, 2em 2em 0 0, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 -1em;
+    }
+
+    37.5% {
+        box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0em 0 0, 2em 2em 0 0.2em, 0 3em 0 0em, -2em 2em 0 -1em, -3em 0em 0 -1em, -2em -2em 0 -1em;
+    }
+
+    50% {
+        box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 0em, 0 3em 0 0.2em, -2em 2em 0 0, -3em 0em 0 -1em, -2em -2em 0 -1em;
+    }
+
+    62.5% {
+        box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 0, -2em 2em 0 0.2em, -3em 0 0 0, -2em -2em 0 -1em;
+    }
+
+    75% {
+        box-shadow: 0em -3em 0 -1em, 2em -2em 0 -1em, 3em 0em 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 0, -3em 0em 0 0.2em, -2em -2em 0 0;
+    }
+
+    87.5% {
+        box-shadow: 0em -3em 0 0, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 0, -3em 0em 0 0, -2em -2em 0 0.2em;
+    }
 }
 </style>
