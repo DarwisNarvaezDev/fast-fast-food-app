@@ -44,6 +44,14 @@
                 </router-link>
                 <span>.</span>
             </li>
+            <li>
+                <router-link to="/dashboard">
+                    <div class="iconWrapper foodWrapper animate__animated animate__tada">
+                        <fa icon="list" color="#5277bf" size="3x" />
+                    </div>
+                </router-link>
+                <span>.</span>
+            </li>
         </ul>
         <div class="userNavContainer">
             <router-link to="/">
@@ -122,13 +130,25 @@ export default {
         distributePellets() {
             const sessionObject = callSessionObject();
             const obj = JSON.parse(sessionObject);
-            if (obj.burgers || obj.salads || obj.drinks) {
-                const jsonObj = JSON.parse(sessionObject)
-                const { burgers, salads, drinks } = jsonObj;
-                this.burgerItems = this.populateQuantities(burgers);
-                this.saladItems = this.populateQuantities(salads);
-                this.drinkItems = this.populateQuantities(drinks);
+            let burgerQty = 0;
+            let saladQty = 0;
+            let drinkQty = 0;
+            if (obj) {
+                obj.forEach(element => {
+                    if (element.menuType === 1) {
+                        burgerQty += element.qty;
+                    }
+                    if (element.menuType === 2) {
+                        saladQty += element.qty;
+                    }
+                    if (element.menuType === 3) {
+                        drinkQty += element.qty;
+                    }
+                })
             }
+            this.burgerItems = burgerQty;
+            this.saladItems = saladQty;
+            this.drinkItems = drinkQty;
         },
         populateQuantities(array) {
             let qty = 0;

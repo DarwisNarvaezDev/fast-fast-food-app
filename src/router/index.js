@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import ShopView from '../views/ShopView.vue'
 import PickMenuView from '../views/PickMenuView.vue'
 import CheckoutView from '../views/CheckoutView.vue'
+import OrdersView from '../views/OrdersView.vue'
 
 const routes = [
   {
@@ -11,14 +12,19 @@ const routes = [
   },
   {
     path: '/menu/:menuType',
-    name: 'pick-menu',
+    name: 'Menu',
     component: PickMenuView,
     meta: {reuse: false}
   },
   {
     path: '/checkout',
-    name: 'asdasdasd',
-    component: CheckoutView,
+    name: 'Checkout',
+    component: CheckoutView
+  },
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: OrdersView
   }
 ]
 

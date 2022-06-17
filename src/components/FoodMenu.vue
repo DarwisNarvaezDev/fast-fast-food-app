@@ -53,13 +53,13 @@ export default {
     border-radius: $main-border-radius 0 0 $main-border-radius;
 
     img {
-        scale: 1.4;
+        transform: scale(1.6);
         filter: blur(2px);
-        transition: scale 0.5s;
+        transition: transform 0.5s;
         object-fit: cover;
 
         &:hover {
-            scale: 1.2;
+            transform: scale(1.5);
             filter: blur(0px)
         }
     }
@@ -70,12 +70,12 @@ export default {
     border-radius: 0 $main-border-radius $main-border-radius 0;
 
     img {
-        scale: 1.6;
-        transition: scale 0.5s;
+        transform: scale(1.4);
+        transition: transform 0.5s;
         filter: blur(2px);
 
         &:hover {
-            scale: 1.4;
+            transform: scale(1.35);
             filter: blur(0px)
         }
     }
