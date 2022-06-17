@@ -44,6 +44,14 @@
                 </router-link>
                 <span>.</span>
             </li>
+            <li>
+                <router-link to="/dashboard">
+                    <div class="iconWrapper foodWrapper animate__animated animate__tada">
+                        <fa icon="list" color="#5277bf" size="3x" />
+                    </div>
+                </router-link>
+                <span>.</span>
+            </li>
         </ul>
         <div class="userNavContainer">
             <router-link to="/">
