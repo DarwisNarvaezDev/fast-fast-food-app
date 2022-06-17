@@ -88,7 +88,6 @@ export default {
   mounted() {
     setInterval(() => {
       this.fetchData();
-      console.log("fetch!");
     }, 5000);
   },
 };

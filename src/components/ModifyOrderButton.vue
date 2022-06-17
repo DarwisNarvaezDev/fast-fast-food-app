@@ -72,8 +72,6 @@ export default {
         }
     },
     mounted() {
-        console.log(`Key: ${this.keyOfLine}`);
-        console.log(`Key: ${this.line}`);
         if (this.line.menuExtras.length === 0 && this.menuSourcesBurgers.includes(this.line.menuName)) this.extrasSources = this.extrasSourcesBurger;
         if (this.line.menuExtras.length === 0 && this.menuSourcesSalads.includes(this.line.menuName)) this.extrasSources = this.extrasSourcesSalad;
         if (this.line.menuExtras.length === 0 && this.menuSourcesDrinks.includes(this.line.menuName)) this.extrasSources = this.extrasSourcesDrinks;
