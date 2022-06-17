@@ -38,13 +38,11 @@ export default {
     beforeMount() {
         const flag = checkSessionObject()
         const menuTypeFlag = parseInt(this.$route.params.menuType) !== 3;
-        console.log(`Menu flag es: ${menuTypeFlag}`);
         if (flag && menuTypeFlag) this.render = flag;
     },
     updated() {
         const flag = checkSessionObject()
         const menuTypeFlag = parseInt(this.$route.params.menuType) !== 3;
-        console.log(`Menu flag es: ${menuTypeFlag}`);
         if (flag && menuTypeFlag) this.render = flag;
     }
 }

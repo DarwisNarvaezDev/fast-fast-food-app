@@ -31,7 +31,6 @@ export default createStore({
       state.render = !state.render;
     },
     GET_TO_MENU_VIEW_WITH_TYPE(state, payload) {
-      console.log(`El render option que me llega: ${payload}`);
       switch (payload) {
         case 1:
           state.renderingMenuOption = menuType.burger;
